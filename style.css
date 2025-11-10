@@ -1,0 +1,67 @@
+body {
+  background-color: #383838;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;   
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 0px;               
+}
+
+input[type=text], input[type=email], input[type=password], input[type=number] {
+  padding: 2%;
+  border-radius: 14px;
+  border: none;
+  width: 40%;
+  font-size: 1rem;
+}
+input[type=submit] {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+
+/*
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.hidden {
+  display: none !important;
+}
+.modal-content {
+  background: #1e1e1e;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  animation: fadeUp 0.4s ease-out;
+}
+
+#closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+*/
