@@ -6,7 +6,6 @@ body {
   flex-direction: column;   
   justify-content: center;
   align-items: center;
-  height: 100vh;
   gap: 0px;               
 }
 
@@ -14,12 +13,12 @@ input[type=text], input[type=email], input[type=password], input[type=number] {
   padding: 2%;
   border-radius: 14px;
   border: none;
-  width: 40%;
+  width: 30%;
   font-size: 1rem;
 }
 input[type=submit] {
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 1% 2%;
+  border-radius: 1%;
   border: none;
   background-color: #4CAF50;
   color: white;
