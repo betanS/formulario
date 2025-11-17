@@ -17,8 +17,10 @@ const patterns = {
 
 
 
-//// Declaramos la constante 'inputs' que contendrá la colección de inputs. 
+//// Declaramos los bloques que extraemos del html. 
 const inputs = document.querySelectorAll('input');
+const guardar = document.querySelector('#submitBtn');
+
 
 
 //// Haciendo uso del método forEach, añadimos el evento keyup a cada uno de los inputs de la colección '(input)'.
@@ -41,3 +43,35 @@ function validate(campo, regex) {
       campo.className = 'invalido';
     }
 }
+
+//Asignamos el onclick del boton de GUARDAR
+guardar.addEventListener('click', (e) => {
+    if(verificarValidos()){
+        //saveData
+        alert("Guardado, datos guardados correctamente.")
+    }else{
+        alert("Error, datos erróneos o incompletos.");
+    }
+});
+
+function verificarValidos(){
+    inputs.forEach((input)=> {
+        if (input.className != 'valido'){
+            return false;
+        }
+    });
+    console.log(resultado);
+    return resultado;
+}
+
+function saveData(){
+    //Guardar datos como Key:DNI + Objeto(lista de datos)
+    //if (DNI ya existe) return Alert:"El dni ya existe datos no guardados"
+}
+
+function retreiveData(DNI){
+    //getItem DNI from sessionStorage 
+    //return objeto(lista de datos)
+}
+
+
