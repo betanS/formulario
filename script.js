@@ -1,3 +1,5 @@
+//######################################################### CONSTRUCTORES // DECLARACION VAR ##########################
+
 const patterns = {
   // Nombre: primera letra mayúscula, resto letras (aceptando acentos)
   nombre: /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+$/,
@@ -16,7 +18,6 @@ const patterns = {
   ccontrasena: /.*/, 
 };
 
-
 //Declaramos el objeto de la lista para guardar en sessionStorage
 let listaDatos = {
     nombre: "",
@@ -32,15 +33,13 @@ let listaDatos = {
     contrasena: ""
 };
 
-
-
 //// Declaramos los bloques que extraemos del html. 
 const inputs = document.querySelectorAll('input');
 const guardar = document.querySelector('#submitBtn');
 const recuperar = document.querySelector('#recuperar');
 
 
-
+//######################################################### BOTONES // OnClick ##########################
 //// Haciendo uso del método forEach, añadimos el evento keyup a cada uno de los inputs de la colección '(input)'.
 inputs.forEach((input) => {
   input.addEventListener('keyup', (e) => {
@@ -55,18 +54,6 @@ inputs.forEach((input) => {
       validate(e.target, patterns[e.target.attributes.name.value]); 
   });
 });
-
-
-
-//// Declaración de la función de validación 'validate' para validar el valor del campo del formulario (variable 'campo') utilizando la expresión regular (variable 'regex').  
-function validate(campo, regex) {
-    // El método 'test' comprueba que el valor del campo recibido (e.target) cumple la expresión regular recibida (patterns[e.target.attributes.name.value]) como parámetros  
-    if(regex.test(campo.value)) {
-      campo.className = 'valido';
-    } else {
-      campo.className = 'invalido';
-    }
-}
 
 //Asignamos el onclick del boton de GUARDAR
 guardar.addEventListener('click', (e) => {
@@ -90,6 +77,18 @@ recuperar.addEventListener('click', (e) => {
     });
 });
 
+//######################################################### Funciones ##########################
+
+//// Declaración de la función de validación 'validate' para validar el valor del campo del formulario (variable 'campo') utilizando la expresión regular (variable 'regex').  
+function validate(campo, regex) {
+    // El método 'test' comprueba que el valor del campo recibido (e.target) cumple la expresión regular recibida (patterns[e.target.attributes.name.value]) como parámetros  
+    if(regex.test(campo.value)) {
+      campo.className = 'valido';
+    } else {
+      campo.className = 'invalido';
+    }
+}
+
 function verificarValidos(){
     var todosValidos = true;
     inputs.forEach((input)=> {
@@ -105,6 +104,8 @@ function verificarValidos(){
     return todosValidos;
 }
 
+//######################################################### Guardado // Carga DATOS ##########################
+
 function saveData(objetoDatos){
     //Guardar datos como Key:DATA + Objeto(lista de datos)
     sessionStorage.setItem("DATA", JSON.stringify(objetoDatos));
@@ -119,3 +120,8 @@ function retreiveData(){
 }
 
 
+
+
+
+///FALTA VALIDAR QUE LOS CAMPOS NO ESTEN VACIOS ANTES DE GUARDAR
+//APLICAR PREVENTDEFAULT
