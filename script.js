@@ -44,13 +44,13 @@ const recuperar = document.querySelector('#recuperar');
 //// Haciendo uso del método forEach, añadimos el evento keyup a cada uno de los inputs de la colección '(input)'.
 inputs.forEach((input) => {
   input.addEventListener('keyup', (e) => {
-    if (e.target.attributes.name.value === 'ccontrasena') {
-        if(e.target.value === document.querySelector('input[name="contrasena"]').value) {
+    if (e.target.attributes.name.value === 'ccontrasena') { // Validar confirmación de contraseña
+        if(e.target.value === document.querySelector('input[name="contrasena"]').value) { // Comparar con el valor del campo de contraseña
             e.target.className = 'valido';
         } else {
             e.target.className = 'invalido';
         }
-        return; // Salir de la función para evitar la validación adicional
+        return; // Salir de la función para evitar validación adicional
     }
       validate(e.target, patterns[e.target.attributes.name.value]); 
   });
@@ -106,18 +106,16 @@ function verificarValidos(){
 }
 
 function saveData(objetoDatos){
-    //Guardar datos como Key:(-dni-) DATA + Objeto(lista de datos)
+    //Guardar datos como Key:DATA + Objeto(lista de datos)
     sessionStorage.setItem("DATA", JSON.stringify(objetoDatos));
     alert("Datos guardados correctamente.");
-    //if (DNI ya existe) return Alert:"El dni ya existe datos no guardados"
+    //Siempre Sobreescribe si ya existe
 }
 
 function retreiveData(){
     var datos = sessionStorage.getItem("DATA");
-    datos = JSON.parse(datos);
+    datos = JSON.parse(datos); //Convertir de nuevo a objeto
     return datos;
-    //getItem DNI from sessionStorage 
-    //return objeto(lista de datos)
 }
 
 
