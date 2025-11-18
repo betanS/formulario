@@ -86,6 +86,7 @@ recuperar.addEventListener('click', (e) => {
     inputs.forEach((input) => {
         console.log("Rellenando campo: " + input.name + " con valor: " + datosRecuperados[input.name]);
         input.value = datosRecuperados[input.name];
+        validate(input, patterns[input.name]);
     });
 });
 
