@@ -44,13 +44,28 @@ const recuperar = document.querySelector('#recuperar');
 inputs.forEach((input) => {
   input.addEventListener('keyup', (e) => {
     if (e.target.attributes.name.value === 'ccontrasena') { // Validar confirmación de contraseña
-        if(e.target.value === document.querySelector('input[name="contrasena"]').value) { // Comparar con el valor del campo de contraseña
+        const confirmContrasena = document.querySelector('input[name="contrasena"]');
+        if(confirmContrasena.value == e.target.value) { // Comparar con el valor del campo de contraseña
             e.target.className = 'valido';
         } else {
             e.target.className = 'invalido';
         }
         return; // Salir de la función para evitar validación adicional
     }
+    /*if (e.target.attributes.name.value === 'telefono' || e.target.attributes.name.value === 'telefonofijo') {
+        e.target.preventDefault(); 
+    }*/
+    if (e.target.attributes.name.value === 'contrasena') { // Si se está validando la contraseña, también validar la confirmación
+        const confirmInput = document.querySelector('input[name="ccontrasena"]');
+        if(confirmInput.value === e.target.value) {
+            confirmInput.className = 'valido';
+        } else {
+            confirmInput.className = 'invalido';
+        }
+        //en este caso no hacemos return porque queremos validar la contraseña normalmente también
+    }
+
+
       validate(e.target, patterns[e.target.attributes.name.value]); 
   });
 });
@@ -123,5 +138,4 @@ function retreiveData(){
 
 
 
-///FALTA VALIDAR QUE LOS CAMPOS NO ESTEN VACIOS ANTES DE GUARDAR
 //APLICAR PREVENTDEFAULT
