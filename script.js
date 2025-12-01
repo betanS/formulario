@@ -94,15 +94,10 @@ inputs.forEach((input) => {
 });*/
 
 obtenerjson.addEventListener('click', (e) => {
-    var datosRecuperados = recuperarJson();
-    console.log("datosRecuperados" + datosRecuperados);
-    //Rellenar los campos del formulario con los datos recuperados
-    inputs.forEach((input) => {
-        console.log("Rellenando campo: " + input.name + " con valor: " + datosRecuperados[input.name]);
-        input.value = datosRecuperados[input.name];
-        validate(input, patterns[input.name]);
-    });
+    datosRecuperados = recuperarjson();
+    console.log("datosRecuperados");
 });
+
 //######################################################### Funciones ##########################
 
 //// Declaración de la función de validación 'validate' para validar el valor del campo del formulario (variable 'campo') utilizando la expresión regular (variable 'regex').  
@@ -145,19 +140,19 @@ function retreiveData(){
     return datos;
 }*/
 
-async function recuperarJson(){
-    try {
-        const response = await fetch('http://localhost:8084/data.json'); // Ruta de tu JSON
-        if (!response.ok) {
-            throw new Error(`Error al cargar el JSON: ${response.status}`);
-        }
-        
-        const datos = await response.json(); // Convierte el JSON en objeto JS
-        return datos; // Devuelve el array directamente
-    } catch (error) {
-        console.error(error);
-        return []; // En caso de error devuelve un array vacío
+function recuperarjson(){
+    var ourRequest = new XMLHttpRequest();
+    var ourData = "nada";
+  ourRequest.open('GET', 'http://localhost:8084/data.json');
+  ourRequest.onload = function() {
+    if (ourRequest.status >= 200 && ourRequest.status < 400) {//https://www.w3schools.com/tags/ref_httpmessages.asp
+        ourData = JSON.parse(ourRequest.responseText);
+      console.log(ourRequest.responseText);
+      return ourData;
+    } else {
+      console.log("We connected to the server, but it returned an error.");
     }
+  }
 }
 
 
