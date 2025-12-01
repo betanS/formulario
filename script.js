@@ -35,8 +35,9 @@ let listaDatos = {
 
 //// Declaramos los bloques que extraemos del html. 
 const inputs = document.querySelectorAll('input');
-const guardar = document.querySelector('#submitBtn');
-const recuperar = document.querySelector('#recuperar');
+//const guardar = document.querySelector('#submitBtn');
+//const recuperar = document.querySelector('#recuperar');
+const obtenerjson = document.querySelector('#obtenerjson');
 
 
 //######################################################### BOTONES // OnClick ##########################
@@ -71,17 +72,17 @@ inputs.forEach((input) => {
 });
 
 //Asignamos el onclick del boton de GUARDAR
-guardar.addEventListener('click', (e) => {
+/*guardar.addEventListener('click', (e) => {
     if(verificarValidos()){
         saveData(listaDatos);
         console.log("Guardando....")
     }else{
         alert("Error, datos erróneos o incompletos.");
     }
-});
+});*/
 
 //Asignamos el onclick del boton de RECUPERAR
-recuperar.addEventListener('click', (e) => {
+/*recuperar.addEventListener('click', (e) => {
     var datosRecuperados = retreiveData();
     console.log("datosRecuperados" + datosRecuperados);
     //Rellenar los campos del formulario con los datos recuperados
@@ -90,8 +91,18 @@ recuperar.addEventListener('click', (e) => {
         input.value = datosRecuperados[input.name];
         validate(input, patterns[input.name]);
     });
-});
+});*/
 
+obtenerjson.addEventListener('click', (e) => {
+    var datosRecuperados = recuperarJson();
+    console.log("datosRecuperados" + datosRecuperados);
+    //Rellenar los campos del formulario con los datos recuperados
+    inputs.forEach((input) => {
+        console.log("Rellenando campo: " + input.name + " con valor: " + datosRecuperados[input.name]);
+        input.value = datosRecuperados[input.name];
+        validate(input, patterns[input.name]);
+    });
+});
 //######################################################### Funciones ##########################
 
 //// Declaración de la función de validación 'validate' para validar el valor del campo del formulario (variable 'campo') utilizando la expresión regular (variable 'regex').  
@@ -120,22 +131,49 @@ function verificarValidos(){
 }
 
 //######################################################### Guardado // Carga DATOS ##########################
-
+/*
 function saveData(objetoDatos){
     //Guardar datos como Key:DATA + Objeto(lista de datos)
     sessionStorage.setItem("DATA", JSON.stringify(objetoDatos));
     alert("Datos guardados correctamente.");
     //Siempre Sobreescribe si ya existe
-}
-
+}*/
+/*
 function retreiveData(){
     var datos = sessionStorage.getItem("DATA");
     datos = JSON.parse(datos); //Convertir de nuevo a objeto
     return datos;
+}*/
+
+async function recuperarJson(){
+    try {
+        const response = await fetch('http://localhost:8084/data.json'); // Ruta de tu JSON
+        if (!response.ok) {
+            throw new Error(`Error al cargar el JSON: ${response.status}`);
+        }
+        
+        const datos = await response.json(); // Convierte el JSON en objeto JS
+        return datos; // Devuelve el array directamente
+    } catch (error) {
+        console.error(error);
+        return []; // En caso de error devuelve un array vacío
+    }
 }
 
 
+function publicarPost(){
+    //APLICAR FETCH
+}
+
+function obtenerGet(){
+    //APLICAR FETCH
+}
+
+function publicarSQL(){
+
+}
+
+function obtenerSQL(){}
 
 
 
-//APLICAR PREVENTDEFAULT
