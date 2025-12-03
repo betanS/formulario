@@ -127,18 +127,19 @@ obtenerjson.addEventListener("click", function() {
 
 
 postphp.addEventListener("click", function() {
-    var xmlhttp = new XMLHttpRequest();
+    var ourRequest = new XMLHttpRequest();
 
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    console.log(this.responseText);
-    myObj = JSON.parse(this.responseText);
-    
-    document.getElementById("demo").innerHTML = myObj.name + " was received correctly";
-  }
-};
-xmlhttp.open("GET", "http://localhost/DEW/process.php", true);
-xmlhttp.send();
+    ourRequest.open("GET", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data.php", true);
+
+    ourRequest.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        var respuesta  = JSON.parse(this.responseText);
+        console.log("Respuesta recibida: " + respuesta);
+        console.log(myObj.name + " was received correctly");
+    }};
+
+    ourRequest.send();
 });
 
 
