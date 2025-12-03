@@ -38,6 +38,7 @@ const inputs = document.querySelectorAll('input');
 //const guardar = document.querySelector('#submitBtn');
 //const recuperar = document.querySelector('#recuperar');
 const obtenerjson = document.querySelector('#obtenerjson');
+const postphp = document.querySelector('#publicarpost');
 
 
 //######################################################### BOTONES // OnClick ##########################
@@ -93,16 +94,48 @@ inputs.forEach((input) => {
     });
 });*/
 
-obtenerjson.addEventListener('click', (e) => {
-    datosRecuperados = recuperarjson();
-    console.log("datosRecuperados");
+
+// Asignamos el onclick del boton de OBTENER JSON + lógica para cargar datos desde un archivo JSON remoto
+obtenerjson.addEventListener("click", function() {
+    var ourRequest = new XMLHttpRequest();
+
+  ourRequest.open('GET', 'https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data.json');
+
+  ourRequest.onload = function() {
+    if (ourRequest.status >= 200 && ourRequest.status < 400) {
+        var ourData = JSON.parse(ourRequest.responseText);
+      console.log(ourRequest.responseText);
+      console.log(ourData.nombre);
+      inputs.forEach((input) => {
+        console.log("Rellenando campo: " + input.name + " con valor: " + ourData[input.name]);
+        input.value = ourData[input.name];
+        validate(input, patterns[input.name]);
+    });
+    } else {
+      console.log("We connected to the server, but it returned an error.");
+    }
+  };
+
+    ourRequest.onerror = function() {
+    console.log("There was a connection error of some sort.");
+  }
+
+  ourRequest.send();
+  console.log("Solicitud enviada.");
 });
+
+
+
+postphp.addEventListener("click", function() {
+    
+});
+
 
 //######################################################### Funciones ##########################
 
 //// Declaración de la función de validación 'validate' para validar el valor del campo del formulario (variable 'campo') utilizando la expresión regular (variable 'regex').  
 function validate(campo, regex) {
-    // El método 'test' comprueba que el valor del campo recibido (e.target) cumple la expresión regular recibida (patterns[e.target.attributes.name.value]) como parámetros  
+    // El método 'test' comprueba que el valor del campo reciourDatabido (e.target) cumple la expresión regular recibida (patterns[e.target.attributes.name.value]) como parámetros  
     if(regex.test(campo.value)) {
       campo.className = 'valido';
     } else {
@@ -141,18 +174,7 @@ function retreiveData(){
 }*/
 
 function recuperarjson(){
-    var ourRequest = new XMLHttpRequest();
-    var ourData = "nada";
-  ourRequest.open('GET', 'http://localhost:8084/data.json');
-  ourRequest.onload = function() {
-    if (ourRequest.status >= 200 && ourRequest.status < 400) {//https://www.w3schools.com/tags/ref_httpmessages.asp
-        ourData = JSON.parse(ourRequest.responseText);
-      console.log(ourRequest.responseText);
-      return ourData;
-    } else {
-      console.log("We connected to the server, but it returned an error.");
-    }
-  }
+    
 }
 
 
