@@ -127,7 +127,18 @@ obtenerjson.addEventListener("click", function() {
 
 
 postphp.addEventListener("click", function() {
+    var xmlhttp = new XMLHttpRequest();
+
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    console.log(this.responseText);
+    myObj = JSON.parse(this.responseText);
     
+    document.getElementById("demo").innerHTML = myObj.name + " was received correctly";
+  }
+};
+xmlhttp.open("GET", "http://localhost/DEW/process.php", true);
+xmlhttp.send();
 });
 
 
