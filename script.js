@@ -38,7 +38,10 @@ const inputs = document.querySelectorAll('input');
 //const guardar = document.querySelector('#submitBtn');
 //const recuperar = document.querySelector('#recuperar');
 const obtenerjson = document.querySelector('#obtenerjson');
+const obtenerphp = document.querySelector('#obtenerphp');
 const postphp = document.querySelector('#publicarpost');
+const publicarsql = document.querySelector('#publicarsql');
+const obtenersql = document.querySelector('#obtenersql');
 
 
 //######################################################### BOTONES // OnClick ##########################
@@ -126,7 +129,7 @@ obtenerjson.addEventListener("click", function() {
 
 
 
-postphp.addEventListener("click", function() {
+obtenerphp.addEventListener("click", function() {
     var ourRequest = new XMLHttpRequest();
 
     ourRequest.open("GET", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data.php", true);
@@ -136,7 +139,80 @@ postphp.addEventListener("click", function() {
         console.log(this.responseText);
         var respuesta  = JSON.parse(this.responseText);
         console.log("Respuesta recibida: " + respuesta);
+        inputs.forEach((input) => {
+            console.log("Rellenando campo: " + input.name + " con valor: " + respuesta[input.name]);
+            input.value = respuesta[input.name];
+            validate(input, patterns[input.name]);
+        });
         console.log(myObj.name + " was received correctly");
+    }};
+
+    ourRequest.send();
+});
+
+postphp.addEventListener("click", function() {
+    var ourRequest = new XMLHttpRequest();
+
+    ourRequest.open("POST", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data.php", true);
+    ourRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    ourRequest.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        var respuesta  = JSON.parse(this.responseText);
+        console.log("Respuesta recibida: " + respuesta);
+        console.log(myObj.name + " was posted correctly");
+    }};
+
+    //Aquí se enviarían los datos del formulario
+    inputs.forEach((input) => {
+        listaDatos[input.name] = input.value;
+    });
+    var datosAEnviar = "data=" + JSON.stringify(listaDatos);
+    console.log("Datos a enviar: " + datosAEnviar);
+    ourRequest.send(datosAEnviar);
+});
+
+publicarsql.addEventListener("click", function() {
+    var datosAEnviar = {};
+    //Aquí se enviarían los datos del formulario
+    inputs.forEach((input) => {
+        datosAEnviar[input.name] = input.value;
+    });
+    var ourRequest = new XMLHttpRequest();
+
+    ourRequest.open("POST", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data_sql.php", true);
+    ourRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    ourRequest.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        var respuesta  = JSON.parse(this.responseText);
+        console.log("Respuesta recibida: " + respuesta);
+        console.log(myObj.name + " was posted correctly to SQL");
+    }};
+
+    var datosString = "data=" + JSON.stringify(datosAEnviar);
+    console.log("Datos a enviar a SQL: " + datosString);
+    ourRequest.send(datosString);
+});
+
+obtenersql.addEventListener("click", function() {
+    var ourRequest = new XMLHttpRequest();
+
+    ourRequest.open("GET", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data_sql.php", true);
+
+    ourRequest.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        var respuesta  = JSON.parse(this.responseText);
+        console.log("Respuesta recibida from SQL: " + respuesta);
+        inputs.forEach((input) => {
+            console.log("Rellenando campo: " + input.name + " con valor: " + respuesta[input.name]);
+            input.value = respuesta[input.name];
+            validate(input, patterns[input.name]);
+        });
+        console.log(myObj.name + " was received correctly from SQL");
     }};
 
     ourRequest.send();
