@@ -102,7 +102,7 @@ inputs.forEach((input) => {
 obtenerjson.addEventListener("click", function() {
     var ourRequest = new XMLHttpRequest();
 
-  ourRequest.open('GET', 'http://192.168.216.175:8084/data.json'); //Uso github como servidor remoto ya que local no funciona por CORS
+  ourRequest.open('GET', 'https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data.json'); //Uso github como servidor remoto ya que local no funciona por CORS
 
   ourRequest.onload = function() {
     if (ourRequest.status >= 200 && ourRequest.status < 400) {
@@ -111,6 +111,11 @@ obtenerjson.addEventListener("click", function() {
       console.log(ourData.nombre);
       inputs.forEach((input) => {
         console.log("Rellenando campo: " + input.name + " con valor: " + ourData[input.name]);
+        if(input.name === "ccontrasena"){
+            //Si es el campo de confirmación de contraseña, rellenar con el mismo valor que la contraseña
+            input.value = ourData["contrasena"];
+        }
+         else
         input.value = ourData[input.name];
         validate(input, patterns[input.name]);
     });
@@ -141,6 +146,11 @@ obtenerphp.addEventListener("click", function() {
         console.log("Respuesta recibida: " + respuesta);
         inputs.forEach((input) => {
             console.log("Rellenando campo: " + input.name + " con valor: " + respuesta[input.name]);
+            if (input.name === "ccontrasena"){
+                //Si es el campo de confirmación de contraseña, rellenar con el mismo valor que la contraseña
+                input.value = respuesta["contrasena"];
+            }
+             else
             input.value = respuesta[input.name];
             validate(input, patterns[input.name]);
         });
@@ -212,6 +222,11 @@ obtenersql.addEventListener("click", function() {
         console.log("Respuesta recibida from SQL: " + respuesta);
         inputs.forEach((input) => {
             console.log("Rellenando campo: " + input.name + " con valor: " + respuesta[input.name]);
+            if (input.name === "ccontrasena"){
+                //Si es el campo de confirmación de contraseña, rellenar con el mismo valor que la contraseña
+                input.value = respuesta["contrasena"];
+            }
+             else
             input.value = respuesta[input.name];
             validate(input, patterns[input.name]);
         });
