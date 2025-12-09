@@ -102,7 +102,7 @@ inputs.forEach((input) => {
 obtenerjson.addEventListener("click", function() {
     var ourRequest = new XMLHttpRequest();
 
-  ourRequest.open('GET', 'https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data.json');
+  ourRequest.open('GET', 'http://192.168.216.175:8084/data.json'); //Uso github como servidor remoto ya que local no funciona por CORS
 
   ourRequest.onload = function() {
     if (ourRequest.status >= 200 && ourRequest.status < 400) {
@@ -132,7 +132,7 @@ obtenerjson.addEventListener("click", function() {
 obtenerphp.addEventListener("click", function() {
     var ourRequest = new XMLHttpRequest();
 
-    ourRequest.open("GET", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data.php", true);
+    ourRequest.open("GET", "http://192.168.216.175:8084/data.php", true);
 
     ourRequest.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -153,35 +153,38 @@ obtenerphp.addEventListener("click", function() {
 postphp.addEventListener("click", function() {
     var ourRequest = new XMLHttpRequest();
 
-    ourRequest.open("POST", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data.php", true);
+    ourRequest.open("POST", "http://192.168.216.175:8084/data.php", true);
     ourRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     ourRequest.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
-        var respuesta  = JSON.parse(this.responseText);
-        console.log("Respuesta recibida: " + respuesta);
-        console.log(myObj.name + " was posted correctly");
-    }};
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("Respuesta del servidor:", this.responseText);
+            var respuesta  = JSON.parse(this.responseText);
+            console.log("POST OK:", respuesta);
+        }
+    };
 
-    //Aquí se enviarían los datos del formulario
+    var listaDatos = {};  
+
     inputs.forEach((input) => {
         listaDatos[input.name] = input.value;
     });
+
     var datosAEnviar = "data=" + JSON.stringify(listaDatos);
-    console.log("Datos a enviar: " + datosAEnviar);
+    console.log("Datos enviados:", datosAEnviar);
+
     ourRequest.send(datosAEnviar);
 });
 
+
 publicarsql.addEventListener("click", function() {
     var datosAEnviar = {};
-    //Aquí se enviarían los datos del formulario
     inputs.forEach((input) => {
         datosAEnviar[input.name] = input.value;
     });
     var ourRequest = new XMLHttpRequest();
 
-    ourRequest.open("POST", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data_sql.php", true);
+    ourRequest.open("POST", "http://192.168.216.175:8084/postdata_sql.php", true);
     ourRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     ourRequest.onreadystatechange = function() {
@@ -200,7 +203,7 @@ publicarsql.addEventListener("click", function() {
 obtenersql.addEventListener("click", function() {
     var ourRequest = new XMLHttpRequest();
 
-    ourRequest.open("GET", "https://raw.githubusercontent.com/betanS/formulario/refs/heads/server%2B/Servidor/data_sql.php", true);
+    ourRequest.open("GET", "http://192.168.216.175:8084/data_sql.php", true);
 
     ourRequest.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
